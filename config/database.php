@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'mongodb'),
 
     /*
     |--------------------------------------------------------------------------
@@ -91,6 +91,11 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'mongodb' => [
+            'driver' => 'mongodb',
+            'dsn' => env('MONGO_DB_DSN', 'mongodb://localhost:27017'),
+            'database' => env('MONGO_DB_DATABASE', 'penjualan_kendaraan')
+        ]
     ],
 
     /*
