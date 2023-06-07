@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CustomResource extends JsonResource
+class ResponseResource extends JsonResource
 {
     public $status;
     public $message;
@@ -23,7 +23,7 @@ class CustomResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'success' => $this->status,
+            'status' => $this->status,
             'message' => $this->message,
             'data' => $this->resource
         ];

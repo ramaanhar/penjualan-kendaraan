@@ -25,3 +25,4 @@ Route::middleware('auth:api')->apiResource('kendaraan', KendaraanController::cla
 // Route::apiResource('kendaraan', KendaraanController::class);
 Route::get('/kendaraan/error/validation', [KendaraanController::class, 'validationError'])->name('kendaraan.error.validation');
 Route::get('/auth/error/unauthorized', [AuthController::class, 'unauthorized'])->name('auth.unauthorized');
+Route::get('/auth/error/validation', [AuthController::class, 'validationError'])->name('auth.error.validation');

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Models\User;
-use Hamcrest\Core\IsTypeOf;
 
 class AuthController extends Controller {
     public function login(LoginRequest $request) {
@@ -16,33 +15,12 @@ class AuthController extends Controller {
             // dd($credentials);
             if (! $token = auth()->guard('api')->attempt($credentials)) {
                 return response()->json([
-                    'status' => 401,
+                    'status' => 422,
                     'message' => 'Wrong username/password',
-                ], 401);
+                ], 422);
             }
-            // $username = $validated['username'];
-            // $password = $validated['password']; 
-            // $userData = User::where('username', $username)->firstOrFail();
-            // // if (! isset($userData[0])) {
-            // if (! isset($userData)) {
-            //     return response()->json([
-            //         "status" => "404",
-            //         "message" => "User not found"
-            //     ]);
-            // }
-            // // $user = User::find($userData[0]['id']);
-            // // if (! Hash::check($password, $user['password'])) {
-            // if (! Hash::check($password, $userData['password'])) {
-            //     return response()->json([
-            //         "status" => "400",
-            //         "message" => "Wrong password"
-            //     ]);
-            // }
-            
-            
-            // $token = $userData->createToken('auth_token')->plainTextToken;
             return response()->json([
-                "status" => "200",
+                "status" => 200,
                 "message" => "Success!",
                 "data" => [
                     "user" => auth()->guard('api')->user(),
@@ -51,7 +29,7 @@ class AuthController extends Controller {
             ]);
         } catch (HttpException $e) {
             return response()->json([
-                "status" => "400",
+                "status" => 400,
                 "message" => $e->getMessage()
             ], 400);
         }
@@ -63,7 +41,6 @@ class AuthController extends Controller {
             $username = $request['username'];
             $email = $request['email'];
             $password = Hash::make($request['password']);
-            // dd([$name, $username, $email, $password]);
             $user = User::create([
                 'name' => $name,
                 'username' => $username,
@@ -80,7 +57,7 @@ class AuthController extends Controller {
             ]);
         } catch (HttpException $e) {
             return response()->json([
-                "status" => "400",
+                "status" => 400,
                 "message" => $e->getMessage()
             ], 400);
         }
@@ -90,5 +67,12 @@ class AuthController extends Controller {
             "status" => 401,
             "message" => 'Unauthorized'
         ], 401);
+    }
+    public function validationError()
+    {
+        return response()->json([
+            'status' => 422,
+            'message' => 'Validation error'
+        ], 422);
     }
 }

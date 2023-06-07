@@ -28,4 +28,7 @@ class LoginRequest extends FormRequest
             'password' => 'required|string'
         ];
     }
+
+    protected $redirect = '/api/kendaraan/error/validation';
+
 }
